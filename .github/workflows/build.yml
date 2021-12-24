@@ -43,7 +43,7 @@ jobs:
         echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
 
     - name: Navigate to Workspace
-      run: cd $GITHUB_WORKSPACE\src
+      run: cd $GITHUB_WORKSPACE/src
      
     - name: Build the Docker Image 
       run: docker build . --file src/Dockerfile --tag ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
