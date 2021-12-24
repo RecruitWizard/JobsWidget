@@ -1,6 +1,6 @@
-# Adverts Widget
+# Jobs Widget
 
-[![Build status](https://dev.azure.com/wizardsoftglobal/Recruit%20Wizard/_apis/build/status/AdvertsWidget)](https://dev.azure.com/wizardsoftglobal/Recruit%20Wizard/_build/latest?definitionId=39)
+[![Build & Test](https://github.com/Wizardsoft/JobsWidget/actions/workflows/build.yml/badge.svg)](https://github.com/Wizardsoft/JobsWidget/actions/workflows/build.yml)
 
 ## Development server
 
