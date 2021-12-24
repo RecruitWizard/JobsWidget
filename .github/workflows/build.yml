@@ -41,13 +41,9 @@ jobs:
       run: |
         echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
         echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
-
-    - name: Navigate to Workspace
-      run: cd src
-
-      
+     
     - name: Build the Docker Image 
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
+      run: docker build . --file src/Dockerfile --tag ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
        
     - name: Login to Azure Container Registry 
       uses: docker/login-action@v1  
