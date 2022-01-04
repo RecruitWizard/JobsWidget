@@ -22,6 +22,7 @@ step "Deploy Kubernetes containers" {
             Octopus.Action.KubernetesContainers.IngressName = "#{Octopus.Environment.Name | ToLower}-#{ServiceName}"
             Octopus.Action.KubernetesContainers.IngressRules = "[{\"host\":\"#{WebsiteUrl}\",\"http\":{\"paths\":[{\"key\":\"/\",\"value\":\"http\",\"option\":\"placeholder\",\"option2\":\"ImplementationSpecific\"}]}}]"
             Octopus.Action.KubernetesContainers.IngressTlsCertificates = "[{\"hosts\":[\"#{WebsiteUrl}\"],\"secretName\":null,\"certificateVariableName\":\"Certificate-RecruitWizard\"}]"
+            Octopus.Action.KubernetesContainers.LoadBalancerAnnotations = "[]"
             Octopus.Action.KubernetesContainers.Namespace = "#{Octopus.Environment.Name | ToLower}"
             Octopus.Action.KubernetesContainers.NodeAffinity = "[]"
             Octopus.Action.KubernetesContainers.PersistentVolumeClaims = "[]"
@@ -35,7 +36,7 @@ step "Deploy Kubernetes containers" {
             Octopus.Action.KubernetesContainers.SecretValues = "{\"DatabasesRecruiter\":\"#{DatabaseConnectionString-Recruiter}\",\"AzureFilesConnectionString\":\"#{AzureFilesConnectionString}\",\"DatabasesTSM4\":\"#{DatabaseConnectionString-TSM4}\",\"DatabasesControls\":\"#{DatabaseConnectionString-Controls}\",\"DatabasesJPS\":\"#{DatabaseConnectionString-JPS}\",\"DatabasesQueues\":\"#{DatabaseConnectionString-Queues}\",\"ElasticSearchServers\":\"#{ElasticSearchServers}\"}"
             Octopus.Action.KubernetesContainers.ServiceName = "#{Octopus.Environment.Name | ToLower}-#{ServiceName}"
             Octopus.Action.KubernetesContainers.ServiceNameType = "External"
-            Octopus.Action.KubernetesContainers.ServicePorts = "[{\"name\":\"http\",\"port\":\"80\",\"targetPort\":\"\",\"nodePort\":\"\",\"protocol\":\"TCP\"}]"
+            Octopus.Action.KubernetesContainers.ServicePorts = "[{\"name\":\"http\",\"port\":\"80\",\"protocol\":\"TCP\"},{\"name\":\"https\",\"port\":\"443\",\"targetPort\":\"80\",\"protocol\":\"TCP\"}]"
             Octopus.Action.KubernetesContainers.ServiceType = "ClusterIP"
             Octopus.Action.KubernetesContainers.Tolerations = "[]"
         }
