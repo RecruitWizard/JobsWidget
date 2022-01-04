@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "JobsWidget", "JobsWidget.esproj", "{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E4D2C6-AA91-4DA9-ADD8-C653D32BDCAD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0803099-559C-4A11-AA4A-F67C2875C24E}
+	EndGlobalSection
+EndGlobal

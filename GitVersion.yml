@@ -3,5 +3,3 @@ assembly-versioning-scheme: MajorMinorPatch
 branches:
    master:
       regex: ^master$|^main$
-ignore:
-  sha: []
