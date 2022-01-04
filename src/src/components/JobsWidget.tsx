@@ -24,8 +24,8 @@ export default class JobsWidget extends React.Component<any, JWState> {
     }
 
     async fetchData(){
-        let token = window.location.pathname; // /CeC4EWzN4Jc
-        let url = 'https://api.wizardsoft.com/v1/adverts' + token;
+        let token = window.location.pathname;
+        let url = 'https://api.recruitwizard.com/v1/adverts' + token;
 
         try {
             const res = await fetch(url);            
