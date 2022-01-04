@@ -35,7 +35,7 @@ step "Deploy Kubernetes containers" {
             Octopus.Action.KubernetesContainers.SecretValues = "{\"DatabasesRecruiter\":\"#{DatabaseConnectionString-Recruiter}\",\"AzureFilesConnectionString\":\"#{AzureFilesConnectionString}\",\"DatabasesTSM4\":\"#{DatabaseConnectionString-TSM4}\",\"DatabasesControls\":\"#{DatabaseConnectionString-Controls}\",\"DatabasesJPS\":\"#{DatabaseConnectionString-JPS}\",\"DatabasesQueues\":\"#{DatabaseConnectionString-Queues}\",\"ElasticSearchServers\":\"#{ElasticSearchServers}\"}"
             Octopus.Action.KubernetesContainers.ServiceName = "#{Octopus.Environment.Name | ToLower}-#{ServiceName}"
             Octopus.Action.KubernetesContainers.ServiceNameType = "External"
-            Octopus.Action.KubernetesContainers.ServicePorts = "[{\"name\":\"http\",\"port\":\"3000\",\"targetPort\":\"\",\"nodePort\":\"\",\"protocol\":\"TCP\"}]"
+            Octopus.Action.KubernetesContainers.ServicePorts = "[{\"name\":\"http\",\"port\":\"80\",\"targetPort\":\"\",\"nodePort\":\"\",\"protocol\":\"TCP\"}]"
             Octopus.Action.KubernetesContainers.ServiceType = "ClusterIP"
             Octopus.Action.KubernetesContainers.Tolerations = "[]"
         }
