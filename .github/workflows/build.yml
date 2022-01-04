@@ -20,9 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        token: ${{ secrets.WizardsoftGitHubToken }}
         fetch-depth: 0
-        submodules: 'recursive'
         
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
