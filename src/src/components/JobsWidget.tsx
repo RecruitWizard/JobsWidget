@@ -29,8 +29,7 @@ export default class JobsWidget extends React.Component<any, JWState> {
 
         try {
             const res = await fetch(url);            
-            const content = await res.json();
-            const data = JSON.parse(content) as IAdv;
+            const data = (await res.json()) as IAdv;
             this.setState({data: data});            
         } catch (error) {
         }
