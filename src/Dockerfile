@@ -1,7 +1,7 @@
 FROM node:16.13.1
 ENV NODE_ENV=production
 
-EXPOSE 3000
+EXPOSE 80
 
 WORKDIR /app
 
@@ -15,4 +15,4 @@ RUN npm run build
 
 RUN npm install -g serve
 
-CMD serve -s build
+CMD serve -p 80 -s build
