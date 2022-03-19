@@ -1,4 +1,4 @@
-FROM node:16.14.0
+FROM node:16.14.2
 ENV NODE_ENV=production
 
 EXPOSE 80
