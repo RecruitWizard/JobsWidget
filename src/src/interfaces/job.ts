@@ -1,14 +1,36 @@
-import { IBulletPoints } from "./bullet-points";
-import { IApply } from "./apply";
-import { IClassifications } from "./classifications";
+
+export interface IClassification {
+    id: string,
+    Name: string,
+    Text: string,
+}
+
+export interface ISalary {
+    MinValue: string,
+    MaxValue: string,
+    Text: string,
+    Period: string,
+}
+
 
 export interface IJob {
     Title: string,
-    Expired:string,
-    Summary:string,
-    Description:string
-    BulletPoints: IBulletPoints
-    Apply: IApply
-    Classifications:IClassifications
-
+    Expired: boolean,
+    Summary: string,
+    Description: string,
+    BulletPoints: {
+        BulletPoint: string[]
+    },
+    Salary: ISalary,
+    Classifications: {
+        Classification: IClassification[]
+    },
+    Apply: {
+        Url: string
+    },
+    id: string | null,
+    Reference: string,
+    DatePosted: string,
+    DateUpdated: string,
+    Recruiter: string | null
 }

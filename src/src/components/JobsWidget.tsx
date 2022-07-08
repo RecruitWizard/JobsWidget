@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IAdv } from '../interfaces/Adv';
-import { IJob } from '../interfaces/job';
-import { IClassification } from "../interfaces/classification";
+import { IClassification, IJob, ISalary } from '../interfaces/job';
 import './JobsWidget.css';
 
 interface JWState {
@@ -10,108 +9,75 @@ interface JWState {
     // token: string
 }
 
-export default class JobsWidget extends React.Component<any, JWState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            data: null,
-            filter: ''
-        };
-    }
+const apiURL = 'https://api.recruitwizard.com/api/adverts/json';
 
-    componentDidMount() {
-        this.fetchData();
-    }
-
-    async fetchData(){
-        let token = window.location.pathname;
-        let url = 'https://api.recruitwizard.com/api/adverts/json' + token;
-
-        try {
-            const res = await fetch(url);            
-            const data = (await res.json()) as IAdv;
-            this.setState({data: data});            
-        } catch (error) {
-        }
-
-    }
-
-    handleFilter = (event: any) => {
-        this.setState({ filter: event.target.value });
-    }
-
-    renderBulletPoints = (list: any[]) => {
-        return (
-            <ul>
-                {list.length > 0 && 
-                    list.map((item, index) => {
-                        return <li key={index}>{item}</li>;
-                    })
-                }
-            </ul>
-        );
-    }
-
-    renderClassification = (classification: IClassification[]) => {
-        if (classification.length === 4) {
-            const category = classification[0].Text;
-            const subCategory = classification[1].Text;
-            const location = classification[2].Text;
-            const workType = classification[3].Text;
-            return (
-                <div>
-                    <span className="bold">{location}</span> - <span>{workType}</span>
-                    <br />
-                    <span className="bold">{category}</span> - <span>{subCategory}</span>
-                </div>
-            );
-        }
-    }
-
-    filterFunction = (job: IJob, term: string) => {
-        if (term) {
-            if (job.Title?.toLowerCase().includes(term)) return true;
-            if (job.Summary?.toLowerCase().includes(term)) return true;
-            let b = job.BulletPoints.BulletPoint.filter((v) => v.toLowerCase().includes(term));
-            if (b.length > 0) return true;
-            
-            let c = job.Classifications.Classification.filter((v) => v.Text.toLowerCase().includes(term));
-            if (c.length > 0) return true;
-
-            return false;
-        }
-        
-        return true;
-    }
-
-    render() {
-        const filter = this.state.filter.toLowerCase();
-        const data = this.state.data?.Job.filter((i) => this.filterFunction(i, filter));
-        return (
-        <div className="container">
-            <div className="card-filter">
-                <div className="card-header">
-                    <h4 className="no-margin">Jobs</h4>
-                </div>
-                <div className="card-body">
-                    <input onChange={this.handleFilter} placeholder="Search Jobs" className="form-control" />
-                </div>
-            </div>
-            {(data) &&
-                data.map((item, index) => {
-                    return (
-                    <div key={index} className="card">
-                        <h4>
-                            <a href={item.Apply.Url} className="link">{item.Title}</a>
-                        </h4>
-                        {this.renderClassification(item.Classifications.Classification)}
-                        {this.renderBulletPoints(item.BulletPoints.BulletPoint)}
-                        {item.Summary}
-                    </div>
-                    );
+const RenderBulletPoints = (list: any[]) => {
+    return (
+        <ul className="bullet-points">
+            {list.length > 0 &&
+                list.map((item, index) => {
+                    return <li key={index}>{item}</li>;
                 })
             }
+        </ul>
+    );
+};
+
+const RenderBadges = (classification: IClassification[], salary: ISalary) => {
+    let locationText = '';
+    let workTypeText = '';
+
+    const location = classification.find(c => c.Name.toLowerCase() === 'location');
+    if (location) locationText = `${location.Name}: ${location.Text}`;
+
+    const workType = classification.find(c => c.Name.toLowerCase() === 'work type');
+    if (workType) workTypeText = `${workType.Name}: ${workType.Text}`;
+
+    const badgeClass = "badge badge-pill badge-light"
+    return (
+        <>
+            <span className={badgeClass}>{`$${salary.Text}`}</span>{'\u00a0'}
+            <span className={badgeClass}>{locationText}</span>{'\u00a0'}
+            <span className={badgeClass}>{workTypeText}</span>
+        </>
+    );
+};
+
+
+export default function JobsWidget() {
+    const [jobs, setJobs] = useState<IAdv | null>(null);
+
+    useEffect(() => {
+        const getData = async () => {
+            const token = window.location.pathname;
+            try {
+                const res = await fetch(apiURL + token);
+                const data = (await res.json()) as IAdv;
+                setJobs(data);
+            } catch (error) {                
+            }
+        };
+        getData();
+    }, []);
+
+    return (
+        <div className="container">
+            <ul className="list-group" >
+                {jobs &&
+                    jobs.Job.map((item, index) => (
+                        <li key={index} className="list-group-item">
+                            <h4>{item.Title}</h4>
+                            <p>{item.Summary}</p>
+                            {RenderBulletPoints(item.BulletPoints.BulletPoint)}
+                            <br />
+                            {RenderBadges(item.Classifications.Classification, item.Salary)}
+                            <br />
+                            <br />
+                            <a className="btn btn-primary" href={item.Apply.Url} target="_blank" rel="noreferrer noopener">Find Out More</a>
+                        </li>
+                    ))
+                }
+            </ul>
         </div>
-        );
-    }
+    );
 }
