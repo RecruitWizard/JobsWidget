@@ -64,3 +64,26 @@ jobs:
         push_package_ids: jobs-widget-agile-recruitment 
         push_overwrite_mode: OverwriteExisting 
         push_version: ${{ steps.gitversion.outputs.fullSemVer }} 
+        
+        
+    - name: Install Octopus CLI 🐙
+      uses: OctopusDeploy/install-octopus-cli-action@v1.2.0
+      with:
+        version: latest      
+
+    - name: Create a release in Octopus Deploy ( Main )
+      uses: OctopusDeploy/create-release-action@v1.1.4
+      with:
+        server: ${{ secrets.OCTOPUS_SERVER_URL }}          
+        api_key: ${{ secrets.OCTOPUS_API_KEY }}
+        project: 'jobs-widget-agile-recruitment'
+        package_version: ${{ steps.gitversion.outputs.fullSemVer }}
+        git_ref: ${{ github.ref }} 
+        
+    - name: Tag Release in GitHub
+      uses: avakar/tag-and-release@v1
+      if: github.ref == 'refs/heads/main'
+      with:
+        tag_name: ${{ steps.gitversion.outputs.fullSemVer }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.WizardsoftGitHubToken }}          
