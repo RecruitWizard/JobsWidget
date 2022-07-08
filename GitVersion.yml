@@ -1,5 +1,1 @@
-mode: ContinuousDeployment
-assembly-versioning-scheme: MajorMinorPatch
-branches:
-   master:
-      regex: ^master$|^main$
+mode: MainLine
