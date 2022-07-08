@@ -64,8 +64,7 @@ jobs:
         push_package_ids: jobs-widget-agile-recruitment 
         push_overwrite_mode: OverwriteExisting 
         push_version: ${{ steps.gitversion.outputs.fullSemVer }} 
-        
-        
+               
     - name: Install Octopus CLI 🐙
       uses: OctopusDeploy/install-octopus-cli-action@v1.2.0
       with:
@@ -76,7 +75,7 @@ jobs:
       with:
         server: ${{ secrets.OCTOPUS_SERVER_URL }}          
         api_key: ${{ secrets.OCTOPUS_API_KEY }}
-        project: 'jobs-widget-agile-recruitment'
+        project: 'Projects-882'
         package_version: ${{ steps.gitversion.outputs.fullSemVer }}
         git_ref: ${{ github.ref }} 
         
