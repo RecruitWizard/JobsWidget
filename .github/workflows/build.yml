@@ -42,7 +42,7 @@ jobs:
      
     - name: Build the Docker Image 
       working-directory: src
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_SERVER_URL }}/agile-recruitment-jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
        
     - name: Login to Azure Container Registry 
       uses: docker/login-action@v1  
@@ -52,15 +52,15 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}  
          
     - name: Push Docker Image to Azure Container Registry 
-      run: docker push ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
+      run: docker push ${{ secrets.DOCKER_SERVER_URL }}/agile-recruitment-jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
        
     - name: Generate Octopus Deploy build information 
       uses: xo-energy/action-octopus-build-information@v1.3.14
       with: 
         octopus_api_key: ${{ secrets.OCTOPUS_API_KEY }} 
         octopus_server: ${{ secrets.OCTOPUS_SERVER_URL }} 
-        octopus_project: jobs-widget 
+        octopus_project: agile-recruitment-jobs-widget 
         output_path: octopus 
-        push_package_ids: jobs-widget 
+        push_package_ids: agile-recruitment-jobs-widget 
         push_overwrite_mode: OverwriteExisting 
         push_version: ${{ steps.gitversion.outputs.fullSemVer }} 
