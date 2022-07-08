@@ -9,7 +9,7 @@ step "Deploy Kubernetes containers" {
         properties = {
             Octopus.Action.EnabledFeatures = "Octopus.Features.KubernetesService,Octopus.Features.KubernetesIngress"
             Octopus.Action.KubernetesContainers.CombinedVolumes = "[]"
-            Octopus.Action.KubernetesContainers.Containers = "[{\"Name\":\"jobs-widget\",\"Ports\":[],\"EnvironmentVariables\":[],\"SecretEnvironmentVariables\":[],\"ConfigMapEnvironmentVariables\":[],\"FieldRefEnvironmentVariables\":[],\"ConfigMapEnvFromSource\":[],\"SecretEnvFromSource\":[],\"VolumeMounts\":[],\"Resources\":{\"requests\":{\"memory\":\"\",\"cpu\":\"\",\"ephemeralStorage\":\"\"},\"limits\":{\"memory\":\"\",\"cpu\":\"\",\"ephemeralStorage\":\"\",\"nvidiaGpu\":\"\",\"amdGpu\":\"\"}},\"LivenessProbe\":{\"failureThreshold\":\"\",\"initialDelaySeconds\":\"\",\"periodSeconds\":\"\",\"successThreshold\":\"\",\"timeoutSeconds\":\"\",\"type\":null,\"exec\":{\"command\":[]},\"httpGet\":{\"host\":\"\",\"path\":\"\",\"port\":\"\",\"scheme\":\"\",\"httpHeaders\":[]},\"tcpSocket\":{\"host\":\"\",\"port\":\"\"}},\"ReadinessProbe\":{\"failureThreshold\":\"\",\"initialDelaySeconds\":\"\",\"periodSeconds\":\"\",\"successThreshold\":\"\",\"timeoutSeconds\":\"\",\"type\":null,\"exec\":{\"command\":[]},\"httpGet\":{\"host\":\"\",\"path\":\"\",\"port\":\"\",\"scheme\":\"\",\"httpHeaders\":[]},\"tcpSocket\":{\"host\":\"\",\"port\":\"\"}},\"StartupProbe\":{\"failureThreshold\":\"\",\"initialDelaySeconds\":\"\",\"periodSeconds\":\"\",\"successThreshold\":\"\",\"timeoutSeconds\":\"\",\"type\":null,\"exec\":{\"command\":[]},\"httpGet\":{\"host\":\"\",\"path\":\"\",\"port\":\"\",\"scheme\":\"\",\"httpHeaders\":[]},\"tcpSocket\":{\"host\":\"\",\"port\":\"\"}},\"Command\":[],\"Args\":[],\"InitContainer\":\"False\",\"SecurityContext\":{\"allowPrivilegeEscalation\":\"\",\"privileged\":\"\",\"readOnlyRootFilesystem\":\"\",\"runAsGroup\":\"\",\"runAsNonRoot\":\"\",\"runAsUser\":\"\",\"capabilities\":{\"add\":[],\"drop\":[]},\"seLinuxOptions\":{\"level\":\"\",\"role\":\"\",\"type\":\"\",\"user\":\"\"}},\"Lifecycle\":{},\"CreateFeedSecrets\":\"True\"}]"
+            Octopus.Action.KubernetesContainers.Containers = "[{\"IsNew\":true,\"InitContainer\":\"False\",\"Ports\":[],\"EnvironmentVariables\":[],\"SecretEnvironmentVariables\":[],\"SecretEnvFromSource\":[],\"ConfigMapEnvironmentVariables\":[],\"ConfigMapEnvFromSource\":[],\"FieldRefEnvironmentVariables\":[],\"VolumeMounts\":[],\"AcquisitionLocation\":\"NotAcquired\",\"Name\":\"jobs-widget-agile-recruitment\",\"PackageId\":\"jobs-widget-agile-recruitment\",\"FeedId\":\"Docker Hub\",\"Properties\":{},\"Command\":[],\"Args\":[],\"Resources\":{\"requests\":{\"memory\":\"\",\"cpu\":\"\",\"ephemeralStorage\":\"\"},\"limits\":{\"memory\":\"\",\"cpu\":\"\",\"ephemeralStorage\":\"\",\"nvidiaGpu\":\"\",\"amdGpu\":\"\"}},\"LivenessProbe\":{\"failureThreshold\":\"\",\"initialDelaySeconds\":\"\",\"periodSeconds\":\"\",\"successThreshold\":\"\",\"timeoutSeconds\":\"\",\"type\":null,\"exec\":{\"command\":[]},\"httpGet\":{\"host\":\"\",\"path\":\"\",\"port\":\"\",\"scheme\":\"\",\"httpHeaders\":[]},\"tcpSocket\":{\"host\":\"\",\"port\":\"\"}},\"ReadinessProbe\":{\"failureThreshold\":\"\",\"initialDelaySeconds\":\"\",\"periodSeconds\":\"\",\"successThreshold\":\"\",\"timeoutSeconds\":\"\",\"type\":null,\"exec\":{\"command\":[]},\"httpGet\":{\"host\":\"\",\"path\":\"\",\"port\":\"\",\"scheme\":\"\",\"httpHeaders\":[]},\"tcpSocket\":{\"host\":\"\",\"port\":\"\"}},\"StartupProbe\":{\"failureThreshold\":\"\",\"initialDelaySeconds\":\"\",\"periodSeconds\":\"\",\"successThreshold\":\"\",\"timeoutSeconds\":\"\",\"type\":null,\"exec\":{\"command\":[]},\"httpGet\":{\"host\":\"\",\"path\":\"\",\"port\":\"\",\"scheme\":\"\",\"httpHeaders\":[]},\"tcpSocket\":{\"host\":\"\",\"port\":\"\"}},\"Lifecycle\":{},\"SecurityContext\":{\"allowPrivilegeEscalation\":\"\",\"privileged\":\"\",\"readOnlyRootFilesystem\":\"\",\"runAsGroup\":\"\",\"runAsNonRoot\":\"\",\"runAsUser\":\"\",\"capabilities\":{\"add\":[],\"drop\":[]},\"seLinuxOptions\":{\"level\":\"\",\"role\":\"\",\"type\":\"\",\"user\":\"\"}}}]"
             Octopus.Action.KubernetesContainers.DeploymentAnnotations = "[]"
             Octopus.Action.KubernetesContainers.DeploymentLabels = "{}"
             Octopus.Action.KubernetesContainers.DeploymentName = "#{Octopus.Environment.Name | ToLower}-#{ServiceName}"
@@ -29,7 +29,6 @@ step "Deploy Kubernetes containers" {
             Octopus.Action.KubernetesContainers.PodAffinity = "[]"
             Octopus.Action.KubernetesContainers.PodAnnotations = "[]"
             Octopus.Action.KubernetesContainers.PodAntiAffinity = "[]"
-            Octopus.Action.KubernetesContainers.PodManagementPolicy = "OrderedReady"
             Octopus.Action.KubernetesContainers.PodSecuritySysctls = "[]"
             Octopus.Action.KubernetesContainers.Replicas = "#{Replicas}"
             Octopus.Action.KubernetesContainers.SecretName = "appsettings-secrets"
@@ -39,13 +38,19 @@ step "Deploy Kubernetes containers" {
             Octopus.Action.KubernetesContainers.ServicePorts = "[{\"name\":\"http\",\"port\":\"80\",\"protocol\":\"TCP\"},{\"name\":\"https\",\"port\":\"443\",\"targetPort\":\"80\",\"protocol\":\"TCP\"}]"
             Octopus.Action.KubernetesContainers.ServiceType = "ClusterIP"
             Octopus.Action.KubernetesContainers.Tolerations = "[]"
+            Octopus.Action.RunOnServer = "true"
         }
         worker_pool = "Windows Server Core 2019"
 
-        packages "jobs-widget" {
+        packages "jobs-widget-agile-recruitment" {
             acquisition_location = "NotAcquired"
-            feed = "Wizardsoft Docker Feed"
-            package_id = "jobs-widget"
+            feed = "Docker Hub"
+            package_id = "jobs-widget-agile-recruitment"
+            properties = {
+                Extract = "False"
+                PackageParameterName = ""
+                SelectionMode = "immediate"
+            }
         }
     }
 }
@@ -60,6 +65,7 @@ step "Microsoft Teams - Post a message" {
                 For more information, please see [deployment details](#{Octopus.Web.ServerUri}#{Octopus.Web.DeploymentLink})!
             EOT
             HookUrl = "#{MicrosoftTeamsBuildNotifications}"
+            Octopus.Action.RunOnServer = "true"
             Octopus.Action.Template.Id = "ActionTemplates-1"
             Octopus.Action.Template.Version = "17"
             Timeout = "60"
