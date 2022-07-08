@@ -70,7 +70,7 @@ jobs:
       with:
         version: latest      
 
-    - name: Create a release in Octopus Deploy ( Main )
+    - name: Create a release in Octopus Deploy
       uses: OctopusDeploy/create-release-action@v1.1.4
       with:
         server: ${{ secrets.OCTOPUS_SERVER_URL }}          
