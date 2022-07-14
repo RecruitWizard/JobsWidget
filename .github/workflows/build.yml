@@ -64,12 +64,12 @@ jobs:
         push_version: ${{ steps.gitversion.outputs.fullSemVer }} 
                 
     - name: Install Octopus CLI 🐙
-      uses: OctopusDeploy/install-octopus-cli-action@v1.2.0
+      uses: OctopusDeploy/install-octopus-cli-action@v1
       with:
         version: latest      
 
     - name: Create a release in Octopus Deploy
-      uses: OctopusDeploy/create-release-action@v1.1.4
+      uses: OctopusDeploy/create-release-action@v1
       with:
         server: ${{ secrets.OCTOPUS_SERVER_URL }}          
         api_key: ${{ secrets.OCTOPUS_API_KEY }}
