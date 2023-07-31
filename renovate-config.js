@@ -17,7 +17,7 @@ module.exports = {
     ],
     branchPrefix: "renovate/",
     platform: "github",
-    repositories: ["Wizardsoft/JobsWidget"],
+    repositories: ["RecruitWizard/JobsWidget"],
     packageRules: [],
     rebaseWhen: "conflicted",
     timezone: "Australia/Sydney",
