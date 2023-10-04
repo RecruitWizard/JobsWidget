@@ -1,4 +1,5 @@
-step "Deploy Kubernetes containers" {
+step "deploy-kubernetes-containers" {
+    name = "Deploy Kubernetes containers"
     properties = {
         Octopus.Action.TargetRoles = "k8s_apps"
     }
@@ -40,17 +41,18 @@ step "Deploy Kubernetes containers" {
             Octopus.Action.KubernetesContainers.ServiceType = "ClusterIP"
             Octopus.Action.KubernetesContainers.Tolerations = "[]"
         }
-        worker_pool = "Windows Server Core 2019"
+        worker_pool = "windows-server-core-2019"
 
         packages "jobs-widget" {
             acquisition_location = "NotAcquired"
-            feed = "Wizardsoft Docker Feed"
+            feed = "wizardsoft-docker-feed"
             package_id = "jobs-widget"
         }
     }
 }
 
-step "Microsoft Teams - Post a message" {
+step "microsoft-teams-post-a-message" {
+    name = "Microsoft Teams - Post a message"
 
     action {
         properties = {
@@ -58,13 +60,13 @@ step "Microsoft Teams - Post a message" {
                 #{Octopus.Release.Notes}
                 
                 For more information, please see [deployment details](#{Octopus.Web.ServerUri}#{Octopus.Web.DeploymentLink})!
-            EOT
+                EOT
             HookUrl = "#{MicrosoftTeamsBuildNotifications}"
             Octopus.Action.Template.Id = "ActionTemplates-1"
             Octopus.Action.Template.Version = "17"
             Timeout = "60"
             Title = "#{Octopus.Project.Name} release #{Octopus.Release.Number} to #{Octopus.Environment.Name} (Kubernetes Cluster - #{Replicas} Pods)"
         }
-        worker_pool = "Windows Server Core 2019"
+        worker_pool = "windows-server-core-2019"
     }
 }
