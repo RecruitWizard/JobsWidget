@@ -4,15 +4,13 @@ release_notes_template = <<-EOT
                 - [#{commit.CommitId}](#{commit.LinkUrl}) - #{commit.Comment}
                 #{/each}
                 #{/each}
-    EOT
+        EOT
 
-connectivity_policy {
-}
+connectivity_policy {}
 
 versioning_strategy {
-
     donor_package {
         package = "jobs-widget"
-        step = "Deploy Kubernetes containers"
+        step = "deploy-kubernetes-containers"
     }
 }
