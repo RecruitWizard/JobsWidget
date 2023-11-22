@@ -9,7 +9,7 @@
     "@types/jest": "27.5.2",
     "@types/node": "16.18.57",
     "@types/react": "17.0.67",
-    "@types/react-dom": "17.0.20",
+    "@types/react-dom": "17.0.25",
     "jest-editor-support": "30.3.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
