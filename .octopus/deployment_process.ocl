@@ -41,7 +41,7 @@ step "deploy-kubernetes-containers" {
             Octopus.Action.KubernetesContainers.ServiceType = "ClusterIP"
             Octopus.Action.KubernetesContainers.Tolerations = "[]"
         }
-        worker_pool = "windows-server-core-2019"
+        worker_pool = "windows-server-core-2022"
 
         packages "jobs-widget" {
             acquisition_location = "NotAcquired"
@@ -67,6 +67,6 @@ step "microsoft-teams-post-a-message" {
             Timeout = "60"
             Title = "#{Octopus.Project.Name} release #{Octopus.Release.Number} to #{Octopus.Environment.Name} (Kubernetes Cluster - #{Replicas} Pods)"
         }
-        worker_pool = "windows-server-core-2019"
+        worker_pool = "windows-server-core-2022"
     }
 }
