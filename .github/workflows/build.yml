@@ -9,25 +9,27 @@ on:
           - "!.octopus/**"      
   workflow_dispatch:      
 
+env:
+  OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+  OCTOPUS_URL: ${{ secrets.OCTOPUS_SERVER_URL }}
+  OCTOPUS_SPACE: 'Recruit Wizard'
+
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.15
+      uses: gittools/actions/gitversion/setup@v0.10.2
       with:
         versionSpec: '5.x'
         
     - name: Display GitVersion config
       id:   gitversion
-      uses: gittools/actions/gitversion/execute@v0.9.15
+      uses: gittools/actions/gitversion/execute@v0.10.2
       with:
         useConfigFile: true
         configFilePath: GitVersion.yml
@@ -43,7 +45,7 @@ jobs:
       run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
        
     - name: Login to Azure Container Registry 
-      uses: docker/login-action@v1  
+      uses: docker/login-action@v3  
       with: 
         registry: ${{ secrets.DOCKER_SERVER_URL }}  
         username: ${{ secrets.DOCKER_USERNAME }}  
@@ -52,36 +54,22 @@ jobs:
     - name: Push Docker Image to Azure Container Registry 
       run: docker push ${{ secrets.DOCKER_SERVER_URL }}/jobs-widget:${{ steps.gitversion.outputs.fullSemVer }} 
        
-    - name: Generate Octopus Deploy build information 
-      uses: xo-energy/action-octopus-build-information@v1.3.14
-      with: 
-        octopus_api_key: ${{ secrets.OCTOPUS_API_KEY }} 
-        octopus_server: ${{ secrets.OCTOPUS_SERVER_URL }} 
-        octopus_project: jobs-widget 
-        output_path: octopus 
-        push_package_ids: jobs-widget 
-        push_overwrite_mode: OverwriteExisting 
-        push_version: ${{ steps.gitversion.outputs.fullSemVer }} 
-                
-    - name: Install Octopus CLI 🐙
-      uses: OctopusDeploy/install-octopus-cli-action@v1
+    - name: Push build information to Octopus Deploy 🐙
+      uses: OctopusDeploy/push-build-information-action@v3
       with:
-        version: latest      
-
+        packages: 'jobs-widget'
+        version: ${{ steps.gitversion.outputs.fullSemVer }}         
+               
     - name: Create a release in Octopus Deploy
-      uses: OctopusDeploy/create-release-action@v1
+      uses: OctopusDeploy/create-release-action@v3
       with:
-        server: ${{ secrets.OCTOPUS_SERVER_URL }}          
-        api_key: ${{ secrets.OCTOPUS_API_KEY }}
-        project: 'Projects-881'
+        project: 'Jobs Widget'
         package_version: ${{ steps.gitversion.outputs.fullSemVer }}
         git_ref: ${{ github.ref }} 
         
-    - name: Tag Release in GitHub
-      uses: avakar/tag-and-release@v1
+    - name: Create a Release in GitHub
       if: github.ref == 'refs/heads/main'
-      with:
-        tag_name: ${{ steps.gitversion.outputs.fullSemVer }}
+      run: gh release create ${{ steps.gitversion.outputs.fullSemVer }} --target ${{ github.sha }} 
       env:
-        GITHUB_TOKEN: ${{ secrets.WizardsoftGitHubToken }}          
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         
