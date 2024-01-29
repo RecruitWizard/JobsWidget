@@ -1,3 +1,3 @@
 export interface IApply {
-    Url:string
+    url:string
 }

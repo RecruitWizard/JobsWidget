@@ -1,4 +1,4 @@
 export interface ILinks {
-    ApplicationFormUrl : string,
-    AdvertUrl : string
+    applicationFormUrl : string,
+    advertUrl : string
 }

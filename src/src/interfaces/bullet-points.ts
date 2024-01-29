@@ -1,3 +1,3 @@
 export interface IBulletPoints { 
-    BulletPoint: any[]
+    bulletPoint: any[]
 }

@@ -25,11 +25,14 @@ export default class JobsWidget extends React.Component<any, JWState> {
 
     async fetchData(){
         let token = window.location.pathname;
-        let url = 'https://api.recruitwizard.com/api/adverts/json' + token;
+        let url = 'https://app.recruitwizard.com/api/adverts'+ token + '/json';
 
         try {
             const res = await fetch(url);            
             const data = (await res.json()) as IAdv;
+            
+            console.log(data);
+            
             this.setState({data: data});            
         } catch (error) {
         }
@@ -54,10 +57,10 @@ export default class JobsWidget extends React.Component<any, JWState> {
 
     renderClassification = (classification: IClassification[]) => {
         if (classification.length === 4) {
-            const category = classification[0].Text;
-            const subCategory = classification[1].Text;
-            const location = classification[2].Text;
-            const workType = classification[3].Text;
+            const category = classification[0].text;
+            const subCategory = classification[1].text;
+            const location = classification[2].text;
+            const workType = classification[3].text;
             return (
                 <div>
                     <span className="bold">{location}</span> - <span>{workType}</span>
@@ -70,12 +73,12 @@ export default class JobsWidget extends React.Component<any, JWState> {
 
     filterFunction = (job: IJob, term: string) => {
         if (term) {
-            if (job.Title?.toLowerCase().includes(term)) return true;
-            if (job.Summary?.toLowerCase().includes(term)) return true;
-            let b = job.BulletPoints.BulletPoint.filter((v) => v.toLowerCase().includes(term));
+            if (job.title?.toLowerCase().includes(term)) return true;
+            if (job.summary?.toLowerCase().includes(term)) return true;
+            let b = job.bulletPoints.bulletPoint.filter((v) => v.toLowerCase().includes(term));
             if (b.length > 0) return true;
             
-            let c = job.Classifications.Classification.filter((v) => v.Text.toLowerCase().includes(term));
+            let c = job.classifications.classification.filter((v) => v.text.toLowerCase().includes(term));
             if (c.length > 0) return true;
 
             return false;
@@ -86,7 +89,7 @@ export default class JobsWidget extends React.Component<any, JWState> {
 
     render() {
         const filter = this.state.filter.toLowerCase();
-        const data = this.state.data?.Job.filter((i) => this.filterFunction(i, filter));
+        const data = this.state.data?.job.filter((i) => this.filterFunction(i, filter));
         return (
         <div className="container">
             <div className="card-filter">
@@ -102,11 +105,11 @@ export default class JobsWidget extends React.Component<any, JWState> {
                     return (
                     <div key={index} className="card">
                         <h4>
-                            <a href={item.Apply.Url} className="link">{item.Title}</a>
+                            <a href={item.apply.url} className="link">{item.title}</a>
                         </h4>
-                        {this.renderClassification(item.Classifications.Classification)}
-                        {this.renderBulletPoints(item.BulletPoints.BulletPoint)}
-                        {item.Summary}
+                        {this.renderClassification(item.classifications.classification)}
+                        {this.renderBulletPoints(item.bulletPoints.bulletPoint)}
+                        {item.summary}
                     </div>
                     );
                 })
