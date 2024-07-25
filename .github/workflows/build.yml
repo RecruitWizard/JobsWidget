@@ -66,10 +66,4 @@ jobs:
         project: 'Jobs Widget'
         package_version: ${{ steps.gitversion.outputs.fullSemVer }}
         git_ref: ${{ github.ref }} 
-        
-    - name: Create a Release in GitHub
-      if: github.ref == 'refs/heads/main'
-      run: gh release create ${{ steps.gitversion.outputs.fullSemVer }} --target ${{ github.sha }} 
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        
+      
