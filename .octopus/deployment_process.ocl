@@ -43,11 +43,6 @@ step "deploy-kubernetes-containers" {
         }
         worker_pool = "hosted-ubuntu"
 
-        container {
-            feed = "docker-hub"
-            image = "octopusdeploy/worker-tools:ubuntu.22.04"
-        }
-
         packages "jobs-widget" {
             acquisition_location = "NotAcquired"
             feed = "wizardsoft-docker-feed"
@@ -73,10 +68,5 @@ step "microsoft-teams-post-a-message" {
             Title = "#{Octopus.Project.Name} release #{Octopus.Release.Number} to #{Octopus.Environment.Name} (Kubernetes Cluster - #{Replicas} Pods)"
         }
         worker_pool = "hosted-ubuntu"
-
-        container {
-            feed = "docker-hub"
-            image = "octopusdeploy/worker-tools:ubuntu.22.04"
-        }
     }
 }
