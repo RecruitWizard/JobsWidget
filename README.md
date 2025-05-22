@@ -2,15 +2,11 @@
 
 Simple App to display jobs on a Customers Website
 
-[![Build & Test](https://github.com/Wizardsoft/JobsWidget/actions/workflows/build.yml/badge.svg)](https://github.com/Wizardsoft/JobsWidget/actions/workflows/build.yml)
-
-[![Octopus Deploy](https://img.shields.io/badge/octopus%20deploy-0D80D8?style=for-the-badge&logo=octopusdeploy&logoColor=white)](https://recruitwizard.octopus.app/app#/Spaces-1/projects/jobs-widget)
-
 Framework: React  
 
 Type: React 
 
-Deploys to: Kubernetes Cluster 
+Deploys to: Vercel 
 
 URL: https://jobs.recruitwizard.com/  
 
